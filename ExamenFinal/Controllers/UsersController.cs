@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ExamenFinal.Models;
+using ExamenFinal.ModelsDTOs;
 
 namespace ExamenFinal.Controllers
 {
@@ -48,6 +49,95 @@ namespace ExamenFinal.Controllers
 
             return user;
         }
+
+        // GET: api/Users/5
+        [HttpGet("{GetUsuariovalor}")]
+        public ActionResult<IEnumerable<UserDTO>> GetUsuariovalor(string username)
+        {
+            var query = (from u in _context.Users
+                       where u.UserName == username
+                         select new
+                         {
+
+                             IdUsuario = u.UserStatusId,
+
+
+                             NombreUsuario = u.UserName,
+
+                             Apellido = u.LastName,
+
+                             NumeroTelefono = u.PhoneNumber,
+
+
+                             Contrasennia = u.UserPassword,
+
+                             DescripcionTrabajo = u.JobDescription,
+
+                             StatusUsuario = u.UserStatus,
+
+                             
+
+                             RoleId = u.UserRoleId,
+
+                             RolUsuario = u.UserRole
+
+
+                         }).ToList();
+            List<UserDTO> list = new List<UserDTO>();
+            foreach (var item in query)
+            {
+                UserDTO NewItem = new UserDTO()
+                {
+                    IdUsuario = item.IdUsuario,
+                    NombreUsuario = item.NombreUsuario,
+                    
+                    Apellido = item.Apellido,
+                    NumeroTelefono = item.NumeroTelefono,
+                    Contrasennia = item.Contrasennia,
+                    DescripcionTrabajo = item.DescripcionTrabajo,
+                    UserStatus = item.StatusUsuario,
+                    
+
+
+                };
+                list.Add(NewItem);
+            }
+
+            if (list == null)
+            {
+                return NotFound();
+
+            }
+            return list;
+
+
+
+        }
+
+
+
+
+       
+
+
+
+
+
+
+            [HttpGet("ValidateUserLogin")]
+        public async Task<ActionResult<User>> ValidateUserLogin(string pUserName, string pPassword)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(e => e.UserName == pUserName && e.UserPassword == pPassword);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return user;
+        }
+
+
+
 
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

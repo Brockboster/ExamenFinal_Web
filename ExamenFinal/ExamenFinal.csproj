@@ -7,6 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\AnswersController.cs" />
+    <Compile Remove="Controllers\AskStatusController.cs" />
+    <Compile Remove="Controllers\ChatsController.cs" />
+    <Compile Remove="Controllers\CountriesController.cs" />
+    <Compile Remove="Controllers\GeneralsController.cs" />
+    <Compile Remove="Controllers\LikesController.cs" />
+    <Compile Remove="Controllers\UserRolesController.cs" />
+    <Compile Remove="Controllers\UserStatusController.cs" />
+    <Compile Remove="Controllers\WeatherForecastController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.16">
       <PrivateAssets>all</PrivateAssets>
